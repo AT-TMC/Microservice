@@ -36,7 +36,8 @@ The functions will return the following:
 
 Below is a detailed UML sequence diagram showing how requesting and receiving data works:
 
-![sequence_diagram](https://github.com/AT-TMC/Microservice/assets/99299362/4424ceb3-ce9a-46b5-a4d3-e345d7ef7da3)
+
+![sequence_diagram](https://github.com/AT-TMC/Microservice/assets/99299362/57ae3e43-da1a-404a-ab63-e24934ca1b30)
 
 ---
 
