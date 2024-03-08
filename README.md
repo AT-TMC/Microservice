@@ -18,7 +18,7 @@ This Flask application provides endpoints for language detection and translation
 
 2. Run the Flask app:
    ```bash
-   python app.py
+   python main.py
    ```
 
 #### Endpoints
