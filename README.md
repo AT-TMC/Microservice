@@ -1,37 +1,85 @@
-### README
----
+### Language Detection and Translation Flask App
 
-## Translation Microservice
+This Flask application provides endpoints for language detection and translation using the `langdetect` and `googletrans` libraries.
 
-### Communication Contract
+#### Setup
 
-This microservice provides language detection and translation functionalities. Below are the instructions on how to programmatically request and receive data.
+1. Install dependencies:
+   ```bash
+   pip install Flask langdetect googletrans==4.0.0-rc1
+   ```
 
-#### Requesting Data
+2. Run the Flask app:
+   ```bash
+   python app.py
+   ```
 
-To request language detection or translation, call the following functions in your Python code:
+#### Endpoints
 
-- `detect_language(text)`: Pass the `text` to detect the language.
-- `translate_text(text, target_language)`: Pass the `text` and `target_language` to translate the text.
+- **`/detect`**: Detects the language of the given text.
+  - **Method**: POST
+  - **Request Body**: JSON with a "text" field
+  - **Response**: JSON with the detected language
+  - Example Request:
+    ```bash
+    curl -X POST http://localhost:5000/detect \
+      -H "Content-Type: application/json" \
+      -d '{"text": "Hello, how are you?"}'
+    ```
+  - Example Response:
+    ```json
+    {"detected_language": "english"}
+    ```
 
-Example Usage:
+- **`/translate`**: Translates the given text to the specified target language.
+  - **Method**: POST
+  - **Request Body**: JSON with "text" and "target_language" fields
+  - **Response**: JSON with the translated text
+  - Example Request:
+    ```bash
+    curl -X POST http://localhost:5000/translate \
+      -H "Content-Type: application/json" \
+      -d '{"text": "Hello, how are you?", "target_language": "spanish"}'
+    ```
+  - Example Response:
+    ```json
+    {"translated_text": "Hola, ¿cómo estás?"}
+    ```
+
+#### Python Requests Example
+
+Here's an example of how to make requests to the endpoints using Python's `requests` library:
+
 ```python
-detected_language = detect_language("Hello, how are you?")
-print("Detected Language:", detected_language)
+import requests
 
-translated_text = translate_text("Hello, how are you?", "Spanish")
-print("Translated Text:", translated_text)
+# URL for the detect endpoint
+detect_url = 'http://localhost:5000/detect'
+# Data for the detect endpoint
+detect_data = {'text': 'Hello, how are you?'}
+
+# Send POST request to detect endpoint
+detect_response = requests.post(detect_url, json=detect_data)
+# Print the detected language
+print("Detected Language:", detect_response.json()['detected_language'])
+
+# URL for the translate endpoint
+translate_url = 'http://localhost:5000/translate'
+# Data for the translate endpoint
+translate_data = {
+    'text': 'Hello, how are you?',
+    'target_language': 'spanish'
+}
+
+# Send POST request to translate endpoint
+translate_response = requests.post(translate_url, json=translate_data)
+# Print the translated text
+print("Translated Text:", translate_response.json()['translated_text'])
 ```
 
-#### Receiving Data
+Ensure the Flask application is running (`python app.py`), then run the provided Python script to see how the `requests` library can be used to interact with the endpoints.
 
-The functions will return the following:
-
-- For `detect_language(text)`:
-  - Returns: Detected language as a string.
-- For `translate_text(text, target_language)`:
-  - Returns: Translated text as a string.
-
+Feel free to modify the text and target language in the example for different translations and language detections.
 ### UML Sequence Diagram
 
 Below is a detailed UML sequence diagram showing how requesting and receiving data works:

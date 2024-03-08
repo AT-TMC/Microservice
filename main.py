@@ -1,8 +1,8 @@
-# pip install langdetect
+from flask import Flask, request, jsonify
 from langdetect import detect
-
-# pip install googletrans==4.0.0-rc1
 from googletrans import Translator
+
+app = Flask(__name__)
 
 LANGUAGE_CODES = {
     'af': 'afrikaans',
@@ -132,3 +132,29 @@ def translate_text(text, target_language):
     target_language_code = LANGUAGE_CODES_REVERSE.get(target_language.lower())
     translation = translator.translate(text, dest=target_language_code)
     return translation.text
+
+
+@app.route('/')
+def index():
+    return "Welcome to Language Detection and Translation!"
+
+
+@app.route('/detect', methods=['POST'])
+def detect_endpoint():
+    data = request.get_json()
+    text = data['text']
+    detected_language = detect_language(text)
+    return jsonify({'detected_language': detected_language})
+
+
+@app.route('/translate', methods=['POST'])
+def translate_endpoint():
+    data = request.get_json()
+    text = data['text']
+    target_language = data['target_language']
+    translated_text = translate_text(text, target_language)
+    return jsonify({'translated_text': translated_text})
+
+
+if __name__ == '__main__':
+    app.run()
