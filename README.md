@@ -1,4 +1,11 @@
-### Language Detection and Translation Flask App
+### README
+---
+
+## Translation Microservice
+
+### Communication Contract
+
+This microservice provides language detection and translation functionalities. Below are the instructions on how to programmatically request and receive data.
 
 This Flask application provides endpoints for language detection and translation using the `langdetect` and `googletrans` libraries.
 
